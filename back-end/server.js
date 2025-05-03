@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const rateLimit = require('express-rate-limit')
 const emailRoutes = require('./routes/email.route') 
+const path = require('path');
 
 dotenv.config()
 
@@ -36,9 +37,9 @@ const testimonialSchema = new mongoose.Schema({
 })
 const Testimonial = mongoose.model('Testimonial', testimonialSchema)
 
-app.get('/', (req, res) => {
-    res.send('API is running...')
-})
+// app.get('/', (req, res) => {
+//     res.send('API is running...')
+// })
 
 const testimonialLimiter = rateLimit({
     windowMs: 60 * 1000, 
@@ -68,6 +69,11 @@ app.get('/api/testimonials', async (req, res) => {
     }
 })
 
+app.use(express.static(path.join(__dirname, '../front-end/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../front-end/dist', 'index.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`)
