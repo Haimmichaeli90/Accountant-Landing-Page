@@ -1,0 +1,47 @@
+import { useEffect, useState } from 'react';
+import LanguageSwitcher from './LanguageSwitcher';
+import './assets/NavBar.css';
+
+function Navbar() {
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    const sections = document.querySelectorAll('section');
+    const onScroll = () => {
+      sections.forEach((section) => {
+        const top = section.getBoundingClientRect().top;
+        if (top <= 150 && top >= -section.offsetHeight + 150) {
+          setActiveSection(section.id);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <nav className="navbar">
+      <div className="logo">
+      <img src="./public/logo.png" alt="HM Logo" className="logo-img" />
+      </div>
+      <LanguageSwitcher />
+      <ul className="nav-links">
+        <li>
+          <a href="#services" className={activeSection === 'services' ? 'active' : ''}>שירותים</a>
+        </li>
+        <li>
+          <a href="#about" className={activeSection === 'about' ? 'active' : ''}>אודות</a>
+        </li>
+        <li>
+          <a href="#faq" className={activeSection === 'faq' ? 'active' : ''}>שאלות נפוצות</a>
+        </li>
+        <li>
+          <a href="#contact" className={activeSection === 'contact' ? 'active' : ''}>צור קשר</a>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+
+export default Navbar;
