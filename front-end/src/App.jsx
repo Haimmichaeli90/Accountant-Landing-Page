@@ -37,7 +37,7 @@ function App() {
 
   const onSubmit = async (data) => {
     try {
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/contact`, data)
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/contact`, data)
         
         console.log('✅ Email sent successfully', res.data)
 

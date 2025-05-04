@@ -25,7 +25,7 @@ function Testimonials() {
 
   const fetchTestimonials = async () => {
     try {
-      const res = await axios.get(`${API_URL}/api/testimonials`);
+      const res = await axios.get(`${API_URL}/testimonials`);
       setTestimonials(res.data);
       console.log('✅ Data from server:', res.data);
     } catch (err) {
@@ -49,7 +49,7 @@ function Testimonials() {
     if (!form.name || !form.text) return;
 
     try {
-      const res = await axios.post(`${API_URL}/api/testimonials`, form);
+      const res = await axios.get(`${API_URL}/testimonials`);
       setTestimonials([res.data, ...testimonials]); 
       setForm({ name: '', text: '' });
       toast.success('תודה על ההמלצה!')

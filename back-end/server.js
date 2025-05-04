@@ -24,23 +24,21 @@ const corsOptions = {
 }
 
 
-app.use(express.static(path.resolve(__dirname, 'public')))
 
 if (!isProduction) {
     app.use(cors(corsOptions))
 }
 
 app.use(express.json())
-app.use('/api', emailRoutes)
+app.use((req, res, next) => {
+    console.log('📥 Incoming request:', req.method, req.originalUrl)
+    next()
+})
 
-
-const MONGO_URI = process.env.NODE_ENV === 'production'
-    ? process.env.MONGO_URI_PROD
-    : process.env.MONGO_URI;
-    mongoose.connect(MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB'))
     .catch((err) => console.error('❌ MongoDB connection error:', err))
-
+    
 const testimonialSchema = new mongoose.Schema({
     name: String,
     text: String,
@@ -53,6 +51,8 @@ const testimonialLimiter = rateLimit({
     max: 5, 
     message: { error: '🚫 ניסית יותר מדי פעמים, אנא המתן רגע...' }
 })
+
+app.use('/api', emailRoutes)
 
 app.post('/api/testimonials',testimonialLimiter, async (req, res) => {
     try {
@@ -76,9 +76,12 @@ app.get('/api/testimonials', async (req, res) => {
     }
 })
 
+app.use(express.static(path.resolve(__dirname, 'public')))
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
+
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`)
