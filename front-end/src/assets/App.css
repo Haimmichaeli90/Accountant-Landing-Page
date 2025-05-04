@@ -29,7 +29,7 @@ body {
   /* הגדרת רקע עם תמונה + צבע */
   background: 
     linear-gradient(270deg, rgba(11, 2, 72, 0.85), rgba(11, 84, 158, 0.85), rgba(11, 2, 72, 0.85)),
-    url('../../public/LOGO.png'); 
+    url('https://res.cloudinary.com/drhqxomnq/image/upload/v1746339320/bckLOGO_m4tktj.png'); 
 
   background-size: cover;
   background-position: center;

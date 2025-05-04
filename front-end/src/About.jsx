@@ -7,7 +7,7 @@ function About() {
     return (
         <section id="about" className="about">
           <div className="about-content">
-            <img src="/profile.jpg" alt={t('aboutAlt')} className="profile-image" />
+          <img src="https://res.cloudinary.com/drhqxomnq/image/upload/v1746339302/profile_tqbx4h.jpg" alt={t('aboutAlt')} className="profile-image" />
             <h2>{t('aboutTitle')}</h2>
             <p>{t('aboutParagraph1')}</p>
             <p>{t('aboutParagraph2')}</p>

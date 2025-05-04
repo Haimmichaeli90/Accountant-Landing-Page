@@ -23,7 +23,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="logo">
-      <img src="./public/logo.png" alt="HM Logo" className="logo-img" />
+      <img src="https://res.cloudinary.com/drhqxomnq/image/upload/v1746339316/LOGO_j5lzbr.png" alt="HM Logo" className="logo-img" />
       </div>
       <LanguageSwitcher />
       <ul className="nav-links">
