@@ -4,28 +4,37 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const rateLimit = require('express-rate-limit')
 const emailRoutes = require('./routes/email.route') 
-const path = require('path');
+const path = require('path')
 
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 5001
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 const corsOptions = {
     origin: [
         'http://127.0.0.1:5173',
         'http://localhost:5173',
-        'https://newsitep-2.onrender.com'
+        'http://127.0.0.1:3030',
+        'http://localhost:3030',
     ],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
 }
 
-app.use(cors(corsOptions))
+// 🟢 תמיד מגישים את הקבצים הסטטיים
+app.use(express.static(path.resolve(__dirname, 'public')))
+
+// 🔵 רק בפיתוח מוסיפים את ה-cors
+if (!isProduction) {
+    app.use(cors(corsOptions))
+}
+
 app.use(express.json())
 app.use('/api', emailRoutes)
 
+// ... Mongoose וכל השאר בלי שינוי
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB'))
@@ -37,10 +46,6 @@ const testimonialSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 })
 const Testimonial = mongoose.model('Testimonial', testimonialSchema)
-
-// app.get('/', (req, res) => {
-//     res.send('API is running...')
-// })
 
 const testimonialLimiter = rateLimit({
     windowMs: 60 * 1000, 
@@ -70,11 +75,10 @@ app.get('/api/testimonials', async (req, res) => {
     }
 })
 
-app.use(express.static(path.join(__dirname, '../front-end/dist')));
-
+// 🟢 זה נשאר כמו שהוא:
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../front-end/dist', 'index.html'));
-});
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`)
