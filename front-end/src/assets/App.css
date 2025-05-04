@@ -1,12 +1,17 @@
-body {
+body,
+html {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   font-family: 'Heebo', sans-serif;
   direction: rtl;
   min-height: 100vh;
   background: #0f0f0f;
   color: white;
+
 }
+
 
 .app {
   width: 100%;
@@ -27,9 +32,9 @@ body {
   overflow: hidden;
 
   /* הגדרת רקע עם תמונה + צבע */
-  background: 
+  background:
     linear-gradient(270deg, rgba(11, 2, 72, 0.85), rgba(11, 84, 158, 0.85), rgba(11, 2, 72, 0.85)),
-    url('https://res.cloudinary.com/drhqxomnq/image/upload/v1746339320/bckLOGO_m4tktj.png'); 
+    url('https://res.cloudinary.com/drhqxomnq/image/upload/v1746339320/bckLOGO_m4tktj.png');
 
   background-size: cover;
   background-position: center;
@@ -60,9 +65,17 @@ body {
 
 
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .hero-content {
@@ -70,8 +83,9 @@ body {
   text-align: center;
   direction: rtl;
   position: relative;
-  z-index: 1; /* כדי שהטקסט יישב מעל הרקע */
+  z-index: 1;
 }
+
 .hero-layout {
   display: flex;
   align-items: center;
@@ -220,15 +234,27 @@ body {
 .call-button:hover {
   opacity: 0.8;
 }
+
 @media (max-width: 768px) {
   .hero h1 {
     font-size: 2rem;
   }
+
   .stats {
     flex-direction: column;
     gap: 20px;
   }
+
   .hero-layout {
     flex-direction: column;
+  }
+
+  .hero-content {
+    max-width: 700px;
+    text-align: center;
+    direction: rtl;
+    position: relative;
+    z-index: 1;
+    margin-left: 10%;
   }
 }

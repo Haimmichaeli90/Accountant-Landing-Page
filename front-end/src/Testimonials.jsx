@@ -1,7 +1,7 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios'; 
+import axios from 'axios';
 import './assets/Testimonials.css';
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -10,14 +10,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 console.log('✅ Using API URL:', API_URL);
 function Testimonials() {
 
-  // const [testimonials, setTestimonials] = useState([
-  //   { name: 'יוסי כהן', text: 'שירות מעולה, מאוד מקצועיים!' },
-  //   { name: 'שרה לוי', text: 'הדה דאגה לי להחזרים בלי כאב ראש. ממליצה בחום!' }
-  // ]);
   const { t } = useTranslation();
   const [testimonials, setTestimonials] = useState([]);
   const [form, setForm] = useState({ name: '', text: '' });
- 
+
 
   useEffect(() => {
     fetchTestimonials();
@@ -50,8 +46,8 @@ function Testimonials() {
 
     try {
       console.log('Sending testimonial:', form);
-      const res = await axios.post(`${API_URL}/testimonials`,form);
-      setTestimonials([res.data, ...testimonials]); 
+      const res = await axios.post(`${API_URL}/testimonials`, form);
+      setTestimonials([res.data, ...testimonials]);
       setForm({ name: '', text: '' });
       toast.success('תודה על ההמלצה!')
     } catch (err) {
@@ -98,7 +94,7 @@ function Testimonials() {
       </form>
       <ToastContainer position="top-center" autoClose={3000} />
     </section>
-    
+
   );
 }
 

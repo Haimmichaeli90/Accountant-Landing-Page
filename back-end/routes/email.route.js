@@ -23,7 +23,7 @@ router.post('/contact', async (req, res) => {
 
         res.status(200).json({ success: true, msg: 'Email sent and saved successfully' });
     } catch (err) {
-        console.error('❌ Error sending email or saving:', err);
+        console.error('Error sending email or saving:', err);
         res.status(500).json({ error: 'Failed to send and save email' });
     }
 });

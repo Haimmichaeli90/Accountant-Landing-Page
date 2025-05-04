@@ -3,7 +3,7 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const rateLimit = require('express-rate-limit')
-const emailRoutes = require('./routes/email.route') 
+const emailRoutes = require('./routes/email.route')
 const path = require('path')
 
 dotenv.config()
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB'))
     .catch((err) => console.error('❌ MongoDB connection error:', err))
-    
+
 const testimonialSchema = new mongoose.Schema({
     name: String,
     text: String,
@@ -47,14 +47,14 @@ const testimonialSchema = new mongoose.Schema({
 const Testimonial = mongoose.model('Testimonial', testimonialSchema)
 
 const testimonialLimiter = rateLimit({
-    windowMs: 60 * 1000, 
-    max: 5, 
-    message: { error: '🚫 ניסית יותר מדי פעמים, אנא המתן רגע...' }
+    windowMs: 60 * 1000,
+    max: 5,
+    message: { error: 'ניסית יותר מדי פעמים, אנא המתן רגע...' }
 })
 
 app.use('/api', emailRoutes)
 
-app.post('/api/testimonials',testimonialLimiter, async (req, res) => {
+app.post('/api/testimonials', testimonialLimiter, async (req, res) => {
     try {
         const { name, text } = req.body
         const newTestimonial = new Testimonial({ name, text })
