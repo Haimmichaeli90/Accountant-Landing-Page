@@ -49,7 +49,8 @@ function Testimonials() {
     if (!form.name || !form.text) return;
 
     try {
-      const res = await axios.post(`${API_URL}/testimonials`);
+      console.log('Sending testimonial:', form);
+      const res = await axios.post(`${API_URL}/testimonials`,form);
       setTestimonials([res.data, ...testimonials]); 
       setForm({ name: '', text: '' });
       toast.success('תודה על ההמלצה!')
