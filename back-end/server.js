@@ -23,10 +23,9 @@ const corsOptions = {
     credentials: true,
 }
 
-// 🟢 תמיד מגישים את הקבצים הסטטיים
+
 app.use(express.static(path.resolve(__dirname, 'public')))
 
-// 🔵 רק בפיתוח מוסיפים את ה-cors
 if (!isProduction) {
     app.use(cors(corsOptions))
 }
@@ -34,9 +33,11 @@ if (!isProduction) {
 app.use(express.json())
 app.use('/api', emailRoutes)
 
-// ... Mongoose וכל השאר בלי שינוי
 
-mongoose.connect(process.env.MONGO_URI)
+const MONGO_URI = process.env.NODE_ENV === 'production'
+    ? process.env.MONGO_URI_PROD
+    : process.env.MONGO_URI;
+    mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB'))
     .catch((err) => console.error('❌ MongoDB connection error:', err))
 
@@ -75,7 +76,6 @@ app.get('/api/testimonials', async (req, res) => {
     }
 })
 
-// 🟢 זה נשאר כמו שהוא:
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
