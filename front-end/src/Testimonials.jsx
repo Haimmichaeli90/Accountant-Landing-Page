@@ -49,7 +49,7 @@ function Testimonials() {
     if (!form.name || !form.text) return;
 
     try {
-      const res = await axios.get(`${API_URL}/testimonials`);
+      const res = await axios.post(`${API_URL}/testimonials`);
       setTestimonials([res.data, ...testimonials]); 
       setForm({ name: '', text: '' });
       toast.success('תודה על ההמלצה!')
